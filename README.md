@@ -2,7 +2,6 @@
 
 A modern, interactive typing speed test application inspired by 10FastFingers. Test and improve your typing speed with a clean, user-friendly interface.
 
-![Typing Game Screenshot](screenshot.png)
 
 ## Features
 
@@ -96,8 +95,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Uses the 100 most common English words for testing
 - Built with React and modern web technologies
 
-## Contact
-
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
-
-Project Link: [https://github.com/yourusername/Typing-Cravings](https://github.com/yourusername/Typing-Cravings)
