@@ -1,85 +1,106 @@
 import { useState, useEffect, useRef } from 'react'
 
+const randomWords = [
+  "the", "be", "to", "of", "and", "a", "in", "that", "have", "I",
+  "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
+  "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
+  "or", "an", "will", "my", "one", "all", "would", "there", "their", "what",
+  "so", "up", "out", "if", "about", "who", "get", "which", "go", "me",
+  "when", "make", "can", "like", "time", "no", "just", "him", "know", "take",
+  "people", "into", "year", "your", "good", "some", "could", "them", "see", "other",
+  "than", "then", "now", "look", "only", "come", "its", "over", "think", "also",
+  "back", "after", "use", "two", "how", "our", "work", "first", "well", "way",
+  "even", "new", "want", "because", "any", "these", "give", "day", "most", "us"
+]
+
 const TypingGame = () => {
-  const [text, setText] = useState('Loading text...')
+  const [words, setWords] = useState([])
+  const [currentWord, setCurrentWord] = useState('')
   const [input, setInput] = useState('')
-  const [time, setTime] = useState(0)
+  const [time, setTime] = useState(60)
   const [isRunning, setIsRunning] = useState(false)
   const [wpm, setWpm] = useState(0)
+  const [accuracy, setAccuracy] = useState(0)
+  const [correctWords, setCorrectWords] = useState(0)
+  const [totalWords, setTotalWords] = useState(0)
   const [showResults, setShowResults] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
   const [gameStarted, setGameStarted] = useState(false)
   const inputRef = useRef(null)
 
-  const fetchRandomText = async () => {
-    try {
-      setIsLoading(true)
-      const response = await fetch('https://api.quotable.io/random?minLength=100&maxLength=200')
-      const data = await response.json()
-      setText(data.content)
-      setIsLoading(false)
-    } catch (error) {
-      console.error('Error fetching text:', error)
-      setText('Error loading text. Please try again.')
-      setIsLoading(false)
+  const generateWords = () => {
+    const newWords = []
+    for (let i = 0; i < 200; i++) {
+      const randomIndex = Math.floor(Math.random() * randomWords.length)
+      newWords.push(randomWords[randomIndex])
     }
+    return newWords
   }
 
   useEffect(() => {
-    fetchRandomText()
+    const initialWords = generateWords()
+    setWords(initialWords)
+    setCurrentWord(initialWords[0])
   }, [])
 
   useEffect(() => {
     let interval
-    if (isRunning) {
+    if (isRunning && time > 0) {
       interval = setInterval(() => {
-        setTime(prevTime => prevTime + 1)
+        setTime(prevTime => prevTime - 1)
       }, 1000)
+    } else if (time === 0 && isRunning) {
+      setIsRunning(false)
+      setShowResults(true)
+      const minutes = 1
+      const finalWpm = Math.round(correctWords / minutes)
+      const finalAccuracy = totalWords > 0 ? Math.round((correctWords / totalWords) * 100) : 0
+      setWpm(finalWpm)
+      setAccuracy(finalAccuracy)
     }
     return () => clearInterval(interval)
-  }, [isRunning])
+  }, [isRunning, time, correctWords, totalWords])
 
-  useEffect(() => {
-    if (input.length === 1 && !isRunning && gameStarted) {
+  const handleKeyDown = (e) => {
+    if (e.key === ' ' && input.length > 0) {
+      setTotalWords(prev => prev + 1)
+      
+      if (input === currentWord) {
+        setCorrectWords(prev => prev + 1)
+      }
+
+      setInput('')
+      setWords(prevWords => {
+        const newWords = [...prevWords]
+        newWords.shift()
+        setCurrentWord(newWords[0])
+        return newWords
+      })
+    }
+  }
+
+  const handleKeyPress = (e) => {
+    if (!gameStarted) {
+      setGameStarted(true)
       setIsRunning(true)
     }
-
-    if (input === text) {
-      setIsRunning(false)
-      const words = text.split(' ').length
-      const minutes = time / 60
-      setWpm(Math.round(words / minutes))
-      setShowResults(true)
+    
+    if (e.key !== ' ') {
+      setInput(prev => prev + e.key)
     }
-  }, [input, text, time, isRunning, gameStarted])
-
-  const handleInputChange = (e) => {
-    if (gameStarted) {
-      setInput(e.target.value)
-    }
-  }
-
-  const handleStart = () => {
-    setGameStarted(true)
-    inputRef.current.focus()
-  }
-
-  const handleNextText = () => {
-    fetchRandomText()
-    setInput('')
-    setTime(0)
-    setIsRunning(false)
-    setShowResults(false)
-    setWpm(0)
-    setGameStarted(false)
   }
 
   const handleRestart = () => {
+    const newWords = generateWords()
+    setWords(newWords)
+    setCurrentWord(newWords[0])
     setInput('')
-    setTime(0)
+    setTime(60)
     setIsRunning(false)
-    setWpm(0)
     setShowResults(false)
+    setWpm(0)
+    setAccuracy(0)
+    setCorrectWords(0)
+    setTotalWords(0)
     setGameStarted(false)
   }
 
@@ -87,54 +108,43 @@ const TypingGame = () => {
     <div className="typing-game">
       <div className="stats">
         <p>Time: {time}s</p>
-        <p>WPM: {wpm}</p>
+        <p>WPM: {showResults ? wpm : '--'}</p>
+        <p>Accuracy: {showResults ? `${accuracy}%` : '--'}</p>
       </div>
       {showResults && (
         <div className="results">
           <h2>Results</h2>
           <p>Your typing speed: {wpm} WPM</p>
-          <p>Time taken: {time} seconds</p>
-          <button onClick={handleNextText}>Next Text</button>
+          <p>Accuracy: {accuracy}%</p>
+          <p>Correct words: {correctWords}</p>
+          <p>Total words: {totalWords}</p>
+          <button onClick={handleRestart}>Try Again</button>
         </div>
       )}
       <div className="text-display">
-        {isLoading ? (
-          <p>Loading new text...</p>
-        ) : (
-          text.split('').map((char, index) => {
-            let className = 'char'
-            if (index < input.length) {
-              className += input[index] === char ? ' correct' : ' incorrect'
-            }
-            return (
-              <span key={index} className={className}>
-                {char}
-              </span>
-            )
-          })
-        )}
+        <div className="word-line">
+          {words.slice(0, 20).map((word, index) => (
+            <span
+              key={index}
+              className={`word ${index === 0 ? 'current' : ''} ${
+                index === 0 && input ? (input === word ? 'correct' : 'incorrect') : ''
+              }`}
+            >
+              {word}
+            </span>
+          ))}
+        </div>
       </div>
-      {!showResults && !isLoading && (
-        <>
-          {!gameStarted ? (
-            <button className="start-button" onClick={handleStart}>
-              Start Typing
-            </button>
-          ) : (
-            <>
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={handleInputChange}
-                placeholder="Start typing..."
-                autoFocus
-              />
-              <button onClick={handleRestart}>Restart</button>
-            </>
-          )}
-        </>
-      )}
+      <div 
+        className="input-display"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        onKeyPress={handleKeyPress}
+        ref={inputRef}
+      >
+        <span className="typed-text">{input}</span>
+        <span className="cursor">|</span>
+      </div>
     </div>
   )
 }
