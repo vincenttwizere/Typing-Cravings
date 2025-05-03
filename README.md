@@ -1,35 +1,12 @@
-# ⌨️ Typing Cravings
+# React + Vite
 
-**Typing Cravings** is an addictive and educational typing game designed to improve your speed, accuracy, and confidence on the keyboard. Whether you're a beginner or looking to sharpen your skills, Typing Cravings will challenge your fingers and feed your craving for keystrokes.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## 🚀 Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- 🧠 Multiple difficulty levels (Beginner, Intermediate, Expert)
-- ⏱️ Real-time typing speed (WPM) and accuracy tracker
-- 🎯 Word, sentence, and paragraph modes
-- 🏆 Leaderboard and achievements (coming soon!)
-- 🎨 Dark/light theme toggle
-- 🔊 Optional sound feedback for keypresses
-- 📱 Responsive design – works on desktop and mobile
+## Expanding the ESLint configuration
 
----
-
-## 🛠️ Tech Stack
-
-- **Frontend**: HTML, CSS, JavaScript (or React if applicable)
-- **Styling**: Tailwind CSS (optional)
-- **State Management**: React Hooks / Vanilla JS
-- **Deployment**: Netlify / Vercel / GitHub Pages
-
----
-
-
-## 🎮 Getting Started
-
-### Clone the repository
-
-```bash
-git clone https://github.com/yourusername/typing-cravings.git
-cd typing-cravings
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
