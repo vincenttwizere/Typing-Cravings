@@ -116,3 +116,48 @@ button {
 button:hover {
   background: #45a049;
 }
+
+.results {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.results p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.results button {
+  margin-top: 1rem;
+  background: #2196F3;
+}
+
+.results button:hover {
+  background: #1976D2;
+}
+
+.start-button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 1rem 0;
+}
+
+.start-button:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
