@@ -52,7 +52,9 @@ const TypingGame = () => {
       setIsRunning(false)
       setShowResults(true)
       const minutes = 1
-      const finalWpm = Math.round(correctWords / minutes)
+      const charactersPerWord = 5
+      const correctCharacters = correctWords * charactersPerWord
+      const finalWpm = Math.round((correctCharacters / 5) / minutes)
       const finalAccuracy = totalWords > 0 ? Math.round((correctWords / totalWords) * 100) : 0
       setWpm(finalWpm)
       setAccuracy(finalAccuracy)
