@@ -25,6 +25,7 @@ const TypingGame = () => {
   const [totalWords, setTotalWords] = useState(0)
   const [showResults, setShowResults] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
+  const [showTimeSelection, setShowTimeSelection] = useState(true)
   const inputRef = useRef(null)
 
   const generateWords = () => {
@@ -51,7 +52,7 @@ const TypingGame = () => {
     } else if (time === 0 && isRunning) {
       setIsRunning(false)
       setShowResults(true)
-      const minutes = 1
+      const minutes = time === 60 ? 1 : time === 180 ? 3 : 5
       const charactersPerWord = 5
       const correctCharacters = correctWords * charactersPerWord
       const finalWpm = Math.round((correctCharacters / 5) / minutes)
@@ -94,6 +95,11 @@ const TypingGame = () => {
     }
   }
 
+  const handleTimeSelect = (selectedTime) => {
+    setTime(selectedTime)
+    setShowTimeSelection(false)
+  }
+
   const handleRestart = () => {
     const newWords = generateWords()
     setWords(newWords)
@@ -107,49 +113,69 @@ const TypingGame = () => {
     setCorrectWords(0)
     setTotalWords(0)
     setGameStarted(false)
+    setShowTimeSelection(true)
+  }
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
   }
 
   return (
     <div className="typing-game">
-      <div className="stats">
-        <p>Time: {time}s</p>
-        <p>WPM: {showResults ? wpm : '--'}</p>
-        <p>Accuracy: {showResults ? `${accuracy}%` : '--'}</p>
-      </div>
-      {showResults && (
-        <div className="results">
-          <h2>Results</h2>
-          <p>Your typing speed: {wpm} WPM</p>
-          <p>Accuracy: {accuracy}%</p>
-          <p>Correct words: {correctWords}</p>
-          <p>Total words: {totalWords}</p>
-          <button onClick={handleRestart}>Try Again</button>
+      {showTimeSelection ? (
+        <div className="time-selection">
+          <h2>Select Test Duration</h2>
+          <div className="time-buttons">
+            <button onClick={() => handleTimeSelect(60)}>1 Minute</button>
+            <button onClick={() => handleTimeSelect(180)}>3 Minutes</button>
+            <button onClick={() => handleTimeSelect(300)}>5 Minutes</button>
+          </div>
         </div>
+      ) : (
+        <>
+          <div className="stats">
+            <p>Time: {formatTime(time)}</p>
+            <p>WPM: {showResults ? wpm : '--'}</p>
+            <p>Accuracy: {showResults ? `${accuracy}%` : '--'}</p>
+          </div>
+          {showResults && (
+            <div className="results">
+              <h2>Results</h2>
+              <p>Your typing speed: {wpm} WPM</p>
+              <p>Accuracy: {accuracy}%</p>
+              <p>Correct words: {correctWords}</p>
+              <p>Total words: {totalWords}</p>
+              <button onClick={handleRestart}>Try Again</button>
+            </div>
+          )}
+          <div className="text-display">
+            <div className="word-line">
+              {words.slice(0, 20).map((word, index) => (
+                <span
+                  key={index}
+                  className={`word ${index === 0 ? 'current' : ''} ${
+                    index === 0 && input ? (input === word ? 'correct' : 'incorrect') : ''
+                  }`}
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div 
+            className="input-display"
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
+            onKeyPress={handleKeyPress}
+            ref={inputRef}
+          >
+            <span className="typed-text">{input}</span>
+            <span className="cursor">|</span>
+          </div>
+        </>
       )}
-      <div className="text-display">
-        <div className="word-line">
-          {words.slice(0, 20).map((word, index) => (
-            <span
-              key={index}
-              className={`word ${index === 0 ? 'current' : ''} ${
-                index === 0 && input ? (input === word ? 'correct' : 'incorrect') : ''
-              }`}
-            >
-              {word}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div 
-        className="input-display"
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
-        onKeyPress={handleKeyPress}
-        ref={inputRef}
-      >
-        <span className="typed-text">{input}</span>
-        <span className="cursor">|</span>
-      </div>
     </div>
   )
 }
