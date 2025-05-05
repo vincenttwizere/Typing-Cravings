@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const AuthForms = ({ onClose }) => {
+  const [activeForm, setActiveForm] = useState('login')
   const [formData, setFormData] = useState({
     login: {
       email: '',
@@ -55,106 +56,122 @@ const AuthForms = ({ onClose }) => {
     <div className="auth-modal">
       <div className="auth-content">
         <button className="close-btn" onClick={onClose}>&times;</button>
-        <div className="auth-forms-container">
-          {/* Login Form */}
-          <div className="auth-form-section">
-            <h2>Login</h2>
-            {error && <div className="error-message">{error}</div>}
-            <form onSubmit={(e) => handleSubmit(e, 'login')}>
-              <div className="form-group">
-                <label htmlFor="login-email">Email</label>
-                <input
-                  type="email"
-                  id="login-email"
-                  name="email"
-                  value={formData.login.email}
-                  onChange={(e) => handleChange('login', e)}
-                  required
-                  placeholder="Enter your email"
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="login-password">Password</label>
-                <input
-                  type="password"
-                  id="login-password"
-                  name="password"
-                  value={formData.login.password}
-                  onChange={(e) => handleChange('login', e)}
-                  required
-                  placeholder="Enter your password"
-                />
-              </div>
-              
-              <button type="submit" className="submit-btn">
-                Login
-              </button>
-            </form>
-          </div>
+        
+        <div className="auth-toggle">
+          <button 
+            className={`toggle-btn ${activeForm === 'login' ? 'active' : ''}`}
+            onClick={() => setActiveForm('login')}
+          >
+            Login
+          </button>
+          <button 
+            className={`toggle-btn ${activeForm === 'signup' ? 'active' : ''}`}
+            onClick={() => setActiveForm('signup')}
+          >
+            Create Account
+          </button>
+        </div>
 
-          {/* Signup Form */}
-          <div className="auth-form-section">
-            <h2>Create Account</h2>
-            {error && <div className="error-message">{error}</div>}
-            <form onSubmit={(e) => handleSubmit(e, 'signup')}>
-              <div className="form-group">
-                <label htmlFor="signup-username">Username</label>
-                <input
-                  type="text"
-                  id="signup-username"
-                  name="username"
-                  value={formData.signup.username}
-                  onChange={(e) => handleChange('signup', e)}
-                  required
-                  placeholder="Enter your username"
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="signup-email">Email</label>
-                <input
-                  type="email"
-                  id="signup-email"
-                  name="email"
-                  value={formData.signup.email}
-                  onChange={(e) => handleChange('signup', e)}
-                  required
-                  placeholder="Enter your email"
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="signup-password">Password</label>
-                <input
-                  type="password"
-                  id="signup-password"
-                  name="password"
-                  value={formData.signup.password}
-                  onChange={(e) => handleChange('signup', e)}
-                  required
-                  placeholder="Enter your password"
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="signup-confirm-password">Confirm Password</label>
-                <input
-                  type="password"
-                  id="signup-confirm-password"
-                  name="confirmPassword"
-                  value={formData.signup.confirmPassword}
-                  onChange={(e) => handleChange('signup', e)}
-                  required
-                  placeholder="Confirm your password"
-                />
-              </div>
-              
-              <button type="submit" className="submit-btn">
-                Create Account
-              </button>
-            </form>
-          </div>
+        <div className="auth-form-container">
+          {activeForm === 'login' ? (
+            <div className="auth-form-section">
+              <h2>Login</h2>
+              {error && <div className="error-message">{error}</div>}
+              <form onSubmit={(e) => handleSubmit(e, 'login')}>
+                <div className="form-group">
+                  <label htmlFor="login-email">Email</label>
+                  <input
+                    type="email"
+                    id="login-email"
+                    name="email"
+                    value={formData.login.email}
+                    onChange={(e) => handleChange('login', e)}
+                    required
+                    placeholder="Enter your email"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="login-password">Password</label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="password"
+                    value={formData.login.password}
+                    onChange={(e) => handleChange('login', e)}
+                    required
+                    placeholder="Enter your password"
+                  />
+                </div>
+                
+                <button type="submit" className="submit-btn">
+                  Login
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="auth-form-section">
+              <h2>Create Account</h2>
+              {error && <div className="error-message">{error}</div>}
+              <form onSubmit={(e) => handleSubmit(e, 'signup')}>
+                <div className="form-group">
+                  <label htmlFor="signup-username">Username</label>
+                  <input
+                    type="text"
+                    id="signup-username"
+                    name="username"
+                    value={formData.signup.username}
+                    onChange={(e) => handleChange('signup', e)}
+                    required
+                    placeholder="Enter your username"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="signup-email">Email</label>
+                  <input
+                    type="email"
+                    id="signup-email"
+                    name="email"
+                    value={formData.signup.email}
+                    onChange={(e) => handleChange('signup', e)}
+                    required
+                    placeholder="Enter your email"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="signup-password">Password</label>
+                  <input
+                    type="password"
+                    id="signup-password"
+                    name="password"
+                    value={formData.signup.password}
+                    onChange={(e) => handleChange('signup', e)}
+                    required
+                    placeholder="Enter your password"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="signup-confirm-password">Confirm Password</label>
+                  <input
+                    type="password"
+                    id="signup-confirm-password"
+                    name="confirmPassword"
+                    value={formData.signup.confirmPassword}
+                    onChange={(e) => handleChange('signup', e)}
+                    required
+                    placeholder="Confirm your password"
+                  />
+                </div>
+                
+                <button type="submit" className="submit-btn">
+                  Create Account
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>
