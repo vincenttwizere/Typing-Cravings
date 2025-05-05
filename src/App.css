@@ -474,26 +474,28 @@ button:active {
 
 .auth-content {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
+  max-height: 90vh;
   position: relative;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
 }
 
 .auth-toggle {
   display: flex;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 1rem;
+  padding-bottom: 0.8rem;
 }
 
 .toggle-btn {
   flex: 1;
-  padding: 0.8rem;
-  font-size: 1.1rem;
+  padding: 0.6rem;
+  font-size: 1rem;
   background: none;
   border: none;
   color: #666;
@@ -526,19 +528,19 @@ button:active {
 }
 
 .auth-form-container {
-  padding: 1rem 0;
+  padding: 0.5rem 0;
 }
 
 .auth-form-section {
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 8px;
   background: #f8f9fa;
 }
 
 .auth-form-section h2 {
   color: #333;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -563,21 +565,22 @@ button:active {
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
   text-align: left;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: #555;
   font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
+  padding: 0.6rem;
+  font-size: 0.95rem;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
   transition: all 0.3s ease;
@@ -604,35 +607,41 @@ button:active {
 .error-message {
   background: #ffebee;
   color: #c62828;
-  padding: 0.8rem;
+  padding: 0.6rem;
   border-radius: 6px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  margin-top: 1rem;
+  padding: 0.7rem;
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
 }
 
 @media (max-width: 768px) {
   .auth-content {
     width: 95%;
-    padding: 1.5rem;
+    padding: 1.2rem;
+    max-height: 85vh;
   }
 
   .auth-toggle {
     gap: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   .toggle-btn {
-    padding: 0.6rem;
-    font-size: 1rem;
+    padding: 0.5rem;
+    font-size: 0.9rem;
   }
 
   .auth-form-section {
-    padding: 1rem;
+    padding: 0.8rem;
+  }
+
+  .form-group {
+    margin-bottom: 0.6rem;
   }
 }
