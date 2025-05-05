@@ -42,6 +42,12 @@ const TypingGame = () => {
     setCurrentWord(initialWords[0])
   }, [])
 
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+  }
+
   useEffect(() => {
     let interval
     if (isRunning && time > 0) {
@@ -106,30 +112,8 @@ const TypingGame = () => {
     setGameStarted(false)
   }
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60)
-    const remainingSeconds = seconds % 60
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
-  }
-
   return (
     <div className="typing-game">
-      <div className="stats">
-        <p>Time: {formatTime(time)}</p>
-        <p>WPM: {showResults ? wpm : '--'}</p>
-        <p>Accuracy: {showResults ? `${accuracy}%` : '--'}</p>
-      </div>
-      {showResults && (
-        <div className="results">
-          <h2>Result Screenshot</h2>
-          <p className="wpm-display">{wpm} WPM</p>
-          <p>Keystrokes ({totalWords} | {totalWords - correctWords}) {totalWords}</p>
-          <p>Accuracy {accuracy}%</p>
-          <p>Correct words {correctWords}</p>
-          <p>Wrong words {totalWords - correctWords}</p>
-          <button onClick={handleRestart}>Try Again</button>
-        </div>
-      )}
       <div className="text-display">
         <div className="word-line">
           {words.slice(0, 20).map((word, index) => (
@@ -147,16 +131,40 @@ const TypingGame = () => {
           ))}
         </div>
       </div>
-      <div 
-        className="input-display"
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
-        onKeyPress={handleKeyPress}
-        ref={inputRef}
-      >
-        <span className="typed-text">{input}</span>
-        <span className="cursor">|</span>
+      <div className="typing-controls">
+        <div 
+          className="input-display"
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          onKeyPress={handleKeyPress}
+          ref={inputRef}
+        >
+          <span className="typed-text">{input}</span>
+          <span className="cursor">|</span>
+        </div>
+        <div className="controls-right">
+          <div className="timer">{formatTime(time)}</div>
+          <button className="refresh-btn" onClick={handleRestart}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 2v6h-6"></path>
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path>
+              <path d="M3 22v-6h6"></path>
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path>
+            </svg>
+          </button>
+        </div>
       </div>
+      {showResults && (
+        <div className="results">
+          <h2>Result Screenshot</h2>
+          <p className="wpm-display">{wpm} WPM</p>
+          <p>Keystrokes ({totalWords} | {totalWords - correctWords}) {totalWords}</p>
+          <p>Accuracy {accuracy}%</p>
+          <p>Correct words {correctWords}</p>
+          <p>Wrong words {totalWords - correctWords}</p>
+          <button onClick={handleRestart}>Try Again</button>
+        </div>
+      )}
     </div>
   )
 }

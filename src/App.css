@@ -184,13 +184,85 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.text-display {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+.typing-area-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  min-height: 150px;
+}
+
+.typing-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 40px;
+}
+
+.timer {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #6a11cb;
+  background: #f8f9fa;
+  border-radius: 6px;
+  min-width: 60px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-btn {
+  background: #f8f9fa;
+  border: none;
+  cursor: pointer;
+  color: #6a11cb;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border-radius: 6px;
+  min-width: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0;
+  margin-top: -2px;
+}
+
+.refresh-btn:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.refresh-btn:hover {
+  color: #6a11cb;
+  background: #f0f0f0;
+  box-shadow: none;
+}
+
+.refresh-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.text-display {
+  flex: 1;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 60px;
   display: flex;
   align-items: center;
 }
@@ -405,35 +477,61 @@ button:active {
 
 .input-display {
   background: white;
-  padding: 1.5rem;
+  padding: 0.8rem;
   border-radius: 8px;
-  margin: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  min-height: 60px;
+  min-height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
+  justify-content: flex-start;
+  font-size: 1.2rem;
   color: #333;
   cursor: text;
   outline: none;
   transition: all 0.3s ease;
+  border: 2px solid #e0e0e0;
+  text-align: left;
+  position: relative;
+  flex: 1;
 }
 
 .input-display:focus {
   box-shadow: 0 2px 12px rgba(33, 150, 243, 0.2);
-  border: 2px solid #2196F3;
+  border-color: #2196F3;
+}
+
+.input-display::before {
+  content: 'Click here to start typing...';
+  position: absolute;
+  left: 0.8rem;
+  color: #999;
+  pointer-events: none;
+}
+
+.input-display:focus::before {
+  display: none;
 }
 
 .typed-text {
-  color: #2196F3;
+  color: #333;
   font-weight: 500;
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+  text-align: left;
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .cursor {
   color: #2196F3;
   animation: blink 1s infinite;
   margin-left: 2px;
+  font-weight: 500;
 }
 
 @keyframes blink {
