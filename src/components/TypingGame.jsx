@@ -156,7 +156,10 @@ const TypingGame = () => {
                 <span
                   key={index}
                   className={`word ${index === 0 ? 'current' : ''} ${
-                    index === 0 && input ? (input === word ? 'correct' : 'incorrect') : ''
+                    index === 0 && input ? (
+                      input === word ? 'correct' : 
+                      word.startsWith(input) ? '' : 'incorrect'
+                    ) : ''
                   }`}
                 >
                   {word}

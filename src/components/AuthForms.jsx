@@ -15,6 +15,10 @@ const AuthForms = ({ onClose }) => {
     }
   })
   const [error, setError] = useState('')
+  const [inputErrors, setInputErrors] = useState({
+    login: { email: false, password: false },
+    signup: { email: false, password: false, confirmPassword: false, username: false }
+  })
 
   const handleChange = (formType, e) => {
     const { name, value } = e.target
@@ -25,14 +29,67 @@ const AuthForms = ({ onClose }) => {
         [name]: value
       }
     }))
+    // Clear error for this input when user starts typing
+    setInputErrors(prev => ({
+      ...prev,
+      [formType]: {
+        ...prev[formType],
+        [name]: false
+      }
+    }))
+    setError('')
+  }
+
+  const validateForm = (formType) => {
+    const errors = { ...inputErrors[formType] }
+    let hasError = false
+
+    if (formType === 'login') {
+      if (!formData.login.email) {
+        errors.email = true
+        hasError = true
+      }
+      if (!formData.login.password) {
+        errors.password = true
+        hasError = true
+      }
+    } else {
+      if (!formData.signup.username) {
+        errors.username = true
+        hasError = true
+      }
+      if (!formData.signup.email) {
+        errors.email = true
+        hasError = true
+      }
+      if (!formData.signup.password) {
+        errors.password = true
+        hasError = true
+      }
+      if (!formData.signup.confirmPassword) {
+        errors.confirmPassword = true
+        hasError = true
+      }
+      if (formData.signup.password !== formData.signup.confirmPassword) {
+        errors.confirmPassword = true
+        hasError = true
+        setError('Passwords do not match')
+      }
+    }
+
+    setInputErrors(prev => ({
+      ...prev,
+      [formType]: errors
+    }))
+
+    return !hasError
   }
 
   const handleSubmit = async (e, formType) => {
     e.preventDefault()
     setError('')
 
-    if (formType === 'signup' && formData.signup.password !== formData.signup.confirmPassword) {
-      setError('Passwords do not match')
+    if (!validateForm(formType)) {
       return
     }
 
@@ -88,6 +145,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('login', e)}
                     required
                     placeholder="Enter your email"
+                    className={inputErrors.login.email ? 'error' : ''}
                   />
                 </div>
                 
@@ -101,6 +159,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('login', e)}
                     required
                     placeholder="Enter your password"
+                    className={inputErrors.login.password ? 'error' : ''}
                   />
                 </div>
                 
@@ -124,6 +183,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('signup', e)}
                     required
                     placeholder="Enter your username"
+                    className={inputErrors.signup.username ? 'error' : ''}
                   />
                 </div>
                 
@@ -137,6 +197,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('signup', e)}
                     required
                     placeholder="Enter your email"
+                    className={inputErrors.signup.email ? 'error' : ''}
                   />
                 </div>
                 
@@ -150,6 +211,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('signup', e)}
                     required
                     placeholder="Enter your password"
+                    className={inputErrors.signup.password ? 'error' : ''}
                   />
                 </div>
                 
@@ -163,6 +225,7 @@ const AuthForms = ({ onClose }) => {
                     onChange={(e) => handleChange('signup', e)}
                     required
                     placeholder="Confirm your password"
+                    className={inputErrors.signup.confirmPassword ? 'error' : ''}
                   />
                 </div>
                 

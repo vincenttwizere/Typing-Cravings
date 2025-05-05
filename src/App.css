@@ -212,6 +212,7 @@ h1 {
   border-radius: 4px;
   transition: all 0.2s ease;
   white-space: nowrap;
+  color: #333;
 }
 
 .word .typed {
@@ -246,9 +247,9 @@ h1 {
 }
 
 .word.incorrect {
-  color: #f44336;
+  color: #333;
   background: rgba(244, 67, 54, 0.1);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 input {
@@ -608,21 +609,63 @@ button:active {
   margin: 0;
   background: white;
   color: #333;
+  text-decoration: none;
+  -webkit-text-fill-color: #333;
 }
 
 .form-group input::placeholder {
   color: #999;
   opacity: 1;
+  text-decoration: none;
 }
 
 .form-group input:focus {
   border-color: #6a11cb;
   box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
   outline: none;
+  color: #333;
+  text-decoration: none;
+  -webkit-text-fill-color: #333;
 }
 
 .form-group input:focus::placeholder {
   color: #bbb;
+  text-decoration: none;
+}
+
+.form-group input.error {
+  border-color: #e0e0e0;
+  background-color: #ffebee;
+  color: #333;
+  text-decoration: none;
+  -webkit-text-fill-color: #333;
+}
+
+.form-group input.error:focus {
+  border-color: #6a11cb;
+  background-color: #ffebee;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+  text-decoration: none;
+  -webkit-text-fill-color: #333;
+}
+
+/* Remove browser default styles */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group input:-webkit-autofill:active {
+  -webkit-text-fill-color: #333;
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-group input.error:-webkit-autofill,
+.form-group input.error:-webkit-autofill:hover,
+.form-group input.error:-webkit-autofill:focus,
+.form-group input.error:-webkit-autofill:active {
+  -webkit-text-fill-color: #333;
+  -webkit-box-shadow: 0 0 0 30px #ffebee inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .error-message {
