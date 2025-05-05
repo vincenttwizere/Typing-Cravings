@@ -26,6 +26,7 @@ const TypingGame = () => {
   const [showResults, setShowResults] = useState(false)
   const [gameStarted, setGameStarted] = useState(false)
   const [showTimeSelection, setShowTimeSelection] = useState(true)
+  const [correctCharacters, setCorrectCharacters] = useState(0)
   const inputRef = useRef(null)
 
   const generateWords = () => {
@@ -53,9 +54,8 @@ const TypingGame = () => {
       setIsRunning(false)
       setShowResults(true)
       const minutes = time === 60 ? 1 : time === 180 ? 3 : 5
-      const charactersPerWord = 5
-      const correctCharacters = correctWords * charactersPerWord
-      const finalWpm = Math.round((correctCharacters / 5) / minutes)
+      // WPM = Number of Correct Words ÷ Time in Minutes
+      const finalWpm = Math.round(correctWords / minutes)
       const finalAccuracy = totalWords > 0 ? Math.round((correctWords / totalWords) * 100) : 0
       setWpm(finalWpm)
       setAccuracy(finalAccuracy)
@@ -72,6 +72,7 @@ const TypingGame = () => {
       
       if (input === currentWord) {
         setCorrectWords(prev => prev + 1)
+        setCorrectCharacters(prev => prev + currentWord.length)
       }
 
       setInput('')
@@ -112,6 +113,7 @@ const TypingGame = () => {
     setAccuracy(0)
     setCorrectWords(0)
     setTotalWords(0)
+    setCorrectCharacters(0)
     setGameStarted(false)
     setShowTimeSelection(true)
   }
@@ -147,6 +149,7 @@ const TypingGame = () => {
               <p>Accuracy: {accuracy}%</p>
               <p>Correct words: {correctWords}</p>
               <p>Total words: {totalWords}</p>
+              <p>Correct characters: {correctCharacters}</p>
               <button onClick={handleRestart}>Try Again</button>
             </div>
           )}
