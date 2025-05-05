@@ -63,7 +63,10 @@ const TypingGame = () => {
   }, [isRunning, time, correctWords, totalWords])
 
   const handleKeyDown = (e) => {
-    if (e.key === ' ' && input.length > 0) {
+    if (e.key === 'Backspace') {
+      e.preventDefault()
+      setInput(prev => prev.slice(0, -1))
+    } else if (e.key === ' ' && input.length > 0) {
       setTotalWords(prev => prev + 1)
       
       if (input === currentWord) {
@@ -86,7 +89,7 @@ const TypingGame = () => {
       setIsRunning(true)
     }
     
-    if (e.key !== ' ') {
+    if (e.key !== ' ' && e.key !== 'Backspace') {
       setInput(prev => prev + e.key)
     }
   }
