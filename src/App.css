@@ -528,11 +528,23 @@ button:active {
   border-radius: 6px;
   transition: all 0.3s ease;
   margin: 0;
+  background: white;
+  color: #333;
+}
+
+.form-group input::placeholder {
+  color: #999;
+  opacity: 1;
 }
 
 .form-group input:focus {
   border-color: #6a11cb;
   box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+  outline: none;
+}
+
+.form-group input:focus::placeholder {
+  color: #bbb;
 }
 
 .error-message {
