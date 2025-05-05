@@ -54,13 +54,15 @@ body {
 }
 
 .app {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
   text-align: center;
   min-height: 100vh;
   width: 100%;
   position: relative;
+  display: flex;
+  gap: 2rem;
 }
 
 .navbar {
@@ -261,8 +263,8 @@ h1 {
   flex: 1;
   background: #f8f9fa;
   border-radius: 8px;
-  padding: 1rem;
-  min-height: 60px;
+  padding: 0.5rem;
+  min-height: 40px;
   display: flex;
   align-items: center;
 }
@@ -270,9 +272,9 @@ h1 {
 .word-line {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.3rem;
   font-size: 1.5rem;
-  line-height: 2;
+  line-height: 1.2;
   text-align: left;
   max-width: 100%;
   overflow-x: hidden;
@@ -280,7 +282,7 @@ h1 {
 }
 
 .word {
-  padding: 0.2rem 0.4rem;
+  padding: 0.1rem 0.3rem;
   border-radius: 4px;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -403,44 +405,11 @@ button:active {
 
 .results p {
   font-size: 1.2rem;
-  margin: 0.8rem 0;
+  margin: 0.4rem auto;
   color: #333;
-  line-height: 1.5;
-}
-
-.results button {
-  margin-top: 1.5rem;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.results button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.start-button {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin: 1rem 0;
-}
-
-.start-button:hover {
-  background: #45a049;
-  transform: scale(1.05);
+  line-height: 1.2;
+  display: block;
+  width: fit-content;
 }
 
 @media (max-width: 768px) {
@@ -839,5 +808,86 @@ button:active {
 
   .form-group {
     margin-bottom: 0.5rem;
+  }
+}
+
+.dashboard {
+  width: 250px;
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  left: 2rem;
+  top: 5rem;
+  height: calc(100vh - 7rem);
+}
+
+.dashboard-title {
+  color: #6a11cb;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.dashboard-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-item {
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  color: #333;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.dashboard-link:hover {
+  background: #f8f9fa;
+  color: #6a11cb;
+}
+
+.dashboard-link.active {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+}
+
+.dashboard-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 270px;
+}
+
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .dashboard {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .main-content {
+    margin-left: 0;
   }
 }

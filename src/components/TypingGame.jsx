@@ -162,7 +162,6 @@ const TypingGame = () => {
           <p>Accuracy {accuracy}%</p>
           <p>Correct words {correctWords}</p>
           <p>Wrong words {totalWords - correctWords}</p>
-          <button onClick={handleRestart}>Try Again</button>
         </div>
       )}
     </div>
