@@ -544,8 +544,8 @@ button:active {
 
 .close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.8rem;
+  right: 0.8rem;
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -554,12 +554,25 @@ button:active {
   padding: 0.5rem;
   line-height: 1;
   box-shadow: none;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  z-index: 1;
 }
 
 .close-btn:hover {
   color: #333;
+  background: rgba(0, 0, 0, 0.05);
   transform: none;
   box-shadow: none;
+}
+
+.close-btn:active {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
