@@ -126,19 +126,14 @@ const TypingApp = () => {
           </div>
         </div>
         <div className="typing-controls">
-          <div className="input-display">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={handleInputChange}
-              onKeyPress={handleKeyPress}
-              placeholder="Start typing..."
-              disabled={results !== null}
-              className="typed-text"
-            />
-            {!input && <span className="cursor">|</span>}
-          </div>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+            disabled={results !== null}
+          />
           <div className="timer">60s</div>
           <button onClick={resetTest} className="refresh-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
