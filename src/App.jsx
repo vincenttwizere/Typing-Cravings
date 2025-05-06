@@ -9,23 +9,32 @@ const TypingApp = () => {
   const [startTime, setStartTime] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [results, setResults] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(60);
   const inputRef = useRef(null);
   const { currentContent, currentMode, isTestActive, completeTest } = useTyping();
+
+  useEffect(() => {
+    let timer;
+    if (isActive && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            handleTestComplete();
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isActive, timeLeft]);
 
   useEffect(() => {
     if (isActive && !startTime) {
       setStartTime(Date.now());
     }
   }, [isActive, startTime]);
-
-  useEffect(() => {
-    if (isTestActive && startTime) {
-      const timeElapsed = (Date.now() - startTime) / 1000;
-      if (timeElapsed >= 60) {
-        handleTestComplete();
-      }
-    }
-  }, [isTestActive, startTime]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -39,7 +48,7 @@ const TypingApp = () => {
   const handleTestComplete = () => {
     if (!currentContent) return;
     
-    const timeElapsed = (Date.now() - startTime) / 1000;
+    const timeElapsed = 60 - timeLeft;
     const words = input.trim().split(/\s+/).length;
     const wpm = Math.round((words / timeElapsed) * 60);
     const accuracy = calculateAccuracy(input, currentContent.content);
@@ -91,9 +100,16 @@ const TypingApp = () => {
     setStartTime(null);
     setIsActive(false);
     setResults(null);
+    setTimeLeft(60);
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   const renderContent = () => {
@@ -134,7 +150,7 @@ const TypingApp = () => {
             onKeyPress={handleKeyPress}
             disabled={results !== null}
           />
-          <div className="timer">60s</div>
+          <div className="timer">{formatTime(timeLeft)}</div>
           <button onClick={resetTest} className="refresh-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
