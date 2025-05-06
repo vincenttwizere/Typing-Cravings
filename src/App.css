@@ -333,35 +333,13 @@ h1 {
   background: rgba(244, 67, 54, 0.1);
 }
 
-.word.completed {
-  color: #4CAF50;
-  background: transparent;
-}
-
-.word.typing {
-  background: #e3f2fd;
-  color: #333;
-  position: relative;
-}
-
-.word.typing::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #2196F3;
-  border-radius: 2px;
-}
-
-.word .typed {
-  color: #2196F3;
-  font-weight: 500;
-}
-
+/* Remove all other word state classes */
+.word.completed,
+.word.typing,
+.word.typing::after,
+.word .typed,
 .word .remaining {
-  color: #666;
+  display: none;
 }
 
 input {

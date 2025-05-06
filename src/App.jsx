@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
+import TypingEffect from './components/TypingEffect';
 import { TypingProvider, useTyping } from './context/TypingContext';
 
 const TypingApp = () => {
@@ -142,42 +143,14 @@ const TypingApp = () => {
 
     const words = currentContent.content.split(' ');
     const currentWordIndex = input.trim().split(/\s+/).length;
-    const visibleWords = words.slice(currentWordIndex, currentWordIndex + 10);
-    const firstLine = visibleWords.slice(0, 5);
-    const secondLine = visibleWords.slice(5, 10);
 
     return (
       <div className="typing-game">
-        <div className="text-display">
-          <div className="word-line">
-            {firstLine.map((word, index) => {
-              const isCurrentWord = index === 0;
-              const isCorrect = isCurrentWord && input === word;
-              const isIncorrect = isCurrentWord && input && !word.startsWith(input);
-
-              return (
-                <span 
-                  key={`first-${index}`} 
-                  className={`word ${isCurrentWord ? 'current' : ''} ${
-                    isCorrect ? 'correct' : ''
-                  } ${isIncorrect ? 'incorrect' : ''}`}
-                >
-                  {word}
-                </span>
-              );
-            })}
-          </div>
-          <div className="word-line">
-            {secondLine.map((word, index) => (
-              <span 
-                key={`second-${index}`} 
-                className="word"
-              >
-                {word}
-              </span>
-            ))}
-          </div>
-        </div>
+        <TypingEffect 
+          words={words}
+          currentWordIndex={currentWordIndex}
+          input={input}
+        />
         <div className="typing-controls">
           <input
             ref={inputRef}
