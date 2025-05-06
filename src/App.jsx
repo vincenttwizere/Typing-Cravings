@@ -116,11 +116,6 @@ const TypingApp = () => {
 
     return (
       <div className="typing-game">
-        <div className="stats">
-          <p>WPM: {results?.wpm || 0}</p>
-          <p>Accuracy: {results?.accuracy || 0}%</p>
-          <p>Time: {results ? Math.round(results.timeElapsed) : 60}s</p>
-        </div>
         <div className="typing-area-header">
           <div className="typing-controls">
             <div className="controls-right">
