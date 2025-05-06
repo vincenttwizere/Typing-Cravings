@@ -1,3 +1,4 @@
+import React from 'react'
 import './App.css'
 import TypingGame from './components/TypingGame'
 import Navbar from './components/Navbar'

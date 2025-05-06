@@ -813,10 +813,8 @@ button:active {
 
 .dashboard {
   width: 250px;
-  background: white;
   padding: 1rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   position: fixed;
   left: 2rem;
   top: 5rem;
@@ -834,7 +832,7 @@ button:active {
 
 .dashboard-menu {
   list-style: none;
-  padding: 0;
+  padding: 1.5rem 0 0 0;
   margin: 0;
 }
 

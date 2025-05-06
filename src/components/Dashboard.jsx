@@ -3,7 +3,6 @@ import React from 'react'
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <h2 className="dashboard-title">Dashboard</h2>
       <ul className="dashboard-menu">
         <li className="dashboard-item">
           <a href="#" className="dashboard-link active">
@@ -60,6 +59,16 @@ const Dashboard = () => {
               <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
             </svg>
             History
+          </a>
+        </li>
+        <li className="dashboard-item">
+          <a href="#" className="dashboard-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Log Out
           </a>
         </li>
       </ul>
