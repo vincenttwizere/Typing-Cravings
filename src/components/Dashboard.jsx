@@ -1,11 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useTyping } from '../context/TypingContext';
 
 const Dashboard = () => {
+  const { loadContent } = useTyping();
+
+  const handleNavigation = (mode) => {
+    loadContent(mode, mode === 'practice' ? 'beginner' : mode);
+  };
+
   return (
     <div className="dashboard">
       <ul className="dashboard-menu">
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link active">
+          <a href="#" className="dashboard-link active" onClick={() => handleNavigation('practice')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
@@ -13,7 +20,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => handleNavigation('beginner')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 6v6l4 2"/>
@@ -22,7 +29,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => handleNavigation('intermediate')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/>
               <path d="M2 17l10 5 10-5"/>
@@ -32,7 +39,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => handleNavigation('advanced')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/>
               <path d="M2 17l10 5 10-5"/>
@@ -43,7 +50,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => handleNavigation('competition')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
@@ -54,7 +61,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => handleNavigation('history')}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
             </svg>
@@ -62,7 +69,7 @@ const Dashboard = () => {
           </a>
         </li>
         <li className="dashboard-item">
-          <a href="#" className="dashboard-link">
+          <a href="#" className="dashboard-link" onClick={() => {/* Add logout logic */}}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
               <polyline points="16 17 21 12 16 7"/>
@@ -73,7 +80,7 @@ const Dashboard = () => {
         </li>
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard 
+export default Dashboard; 

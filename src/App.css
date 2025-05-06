@@ -814,11 +814,11 @@ button:active {
 .dashboard {
   width: 250px;
   padding: 1rem;
-  border-radius: 12px;
   position: fixed;
   left: 2rem;
   top: 5rem;
   height: calc(100vh - 7rem);
+  z-index: 100;
 }
 
 .dashboard-title {
@@ -888,4 +888,13 @@ button:active {
   .main-content {
     margin-left: 0;
   }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+  color: #666;
 }
