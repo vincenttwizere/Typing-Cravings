@@ -38,10 +38,20 @@ const TypingApp = () => {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setInput(value);
-    
+    const words = currentContent.content.split(' ');
+    const currentWordIndex = input.trim().split(/\s+/).length;
+    const currentWord = words[currentWordIndex];
+
     if (!isActive && value.length > 0) {
       setIsActive(true);
+      setStartTime(Date.now());
+    }
+
+    // Check if the current word is completed
+    if (value.trim() === currentWord) {
+      setInput('');
+    } else {
+      setInput(value);
     }
   };
 
@@ -130,12 +140,39 @@ const TypingApp = () => {
       );
     }
 
+    const words = currentContent.content.split(' ');
+    const currentWordIndex = input.trim().split(/\s+/).length;
+    const visibleWords = words.slice(currentWordIndex, currentWordIndex + 10);
+    const firstLine = visibleWords.slice(0, 5);
+    const secondLine = visibleWords.slice(5, 10);
+
     return (
       <div className="typing-game">
         <div className="text-display">
           <div className="word-line">
-            {currentContent.content.split(' ').map((word, index) => (
-              <span key={index} className="word">
+            {firstLine.map((word, index) => {
+              const isCurrentWord = index === 0;
+              const isCorrect = isCurrentWord && input === word;
+              const isIncorrect = isCurrentWord && input && !word.startsWith(input);
+
+              return (
+                <span 
+                  key={`first-${index}`} 
+                  className={`word ${isCurrentWord ? 'current' : ''} ${
+                    isCorrect ? 'correct' : ''
+                  } ${isIncorrect ? 'incorrect' : ''}`}
+                >
+                  {word}
+                </span>
+              );
+            })}
+          </div>
+          <div className="word-line">
+            {secondLine.map((word, index) => (
+              <span 
+                key={`second-${index}`} 
+                className="word"
+              >
                 {word}
               </span>
             ))}
@@ -149,15 +186,36 @@ const TypingApp = () => {
             onChange={handleInputChange}
             onKeyPress={handleKeyPress}
             disabled={results !== null}
+            placeholder={isActive ? "Keep typing..." : "Start typing to begin..."}
+            autoFocus
+            spellCheck="false"
+            autoComplete="off"
+            autoCapitalize="off"
           />
           <div className="timer">{formatTime(timeLeft)}</div>
-          <button onClick={resetTest} className="refresh-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-              <path d="M3 3v5h5"/>
+          <button 
+            className="refresh-btn" 
+            onClick={resetTest}
+            title={isActive ? "Reset test" : "Change text"}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+              <path d="M16 21h5v-5"></path>
             </svg>
           </button>
         </div>
+        {results && (
+          <div className="results">
+            <h2>Test Results</h2>
+            <p className="wpm-display">{results.wpm} WPM</p>
+            <p>Accuracy: {results.accuracy}%</p>
+            <p>Words Typed: {results.wordsTyped}</p>
+            <p>Time: {results.timeElapsed} seconds</p>
+            <button onClick={resetTest}>Try Again</button>
+          </div>
+        )}
       </div>
     );
   };
