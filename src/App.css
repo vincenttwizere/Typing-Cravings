@@ -303,14 +303,12 @@ h1 {
   overflow-x: hidden;
   color: #333;
   min-height: 2.5rem;
-  transition: all 0.2s ease;
 }
 
 .default-word {
   color: #000;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  transition: all 0.2s ease;
   white-space: nowrap;
   display: inline-block;
   margin-right: 0.5rem;
@@ -322,18 +320,6 @@ h1 {
   color: #000;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  display: inline-block;
-  margin-right: 0.5rem;
-  position: relative;
-}
-
-.correct-word {
-  color: green;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
   white-space: nowrap;
   display: inline-block;
   margin-right: 0.5rem;
@@ -341,14 +327,24 @@ h1 {
 }
 
 .incorrect-word {
-  color: red;
+  background-color: #ffebee;
+  color: #d32f2f;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  transition: all 0.2s ease;
   white-space: nowrap;
   display: inline-block;
   margin-right: 0.5rem;
   position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Remove all transitions */
+.default-word,
+.current-word {
+  transition: none;
 }
 
 /* Remove old word classes */

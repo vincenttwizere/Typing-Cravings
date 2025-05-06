@@ -48,16 +48,16 @@ const TypingApp = () => {
       setStartTime(Date.now());
     }
 
-    // Check if the current word is completed
+    // Update input immediately
+    setInput(value);
+
+    // If we've completed a word (space was pressed)
     if (value.endsWith(' ')) {
       const typedWord = value.trim();
+      // If the word is correct, clear the input
       if (typedWord === currentWord) {
         setInput('');
-      } else {
-        setInput(value);
       }
-    } else {
-      setInput(value);
     }
   };
 
@@ -191,7 +191,6 @@ const TypingApp = () => {
             <p>Accuracy: {results.accuracy}%</p>
             <p>Words Typed: {results.wordsTyped}</p>
             <p>Time: {results.timeElapsed} seconds</p>
-            <button onClick={resetTest}>Try Again</button>
           </div>
         )}
       </div>

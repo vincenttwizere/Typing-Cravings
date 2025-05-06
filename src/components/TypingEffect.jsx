@@ -1,25 +1,28 @@
 import React from 'react';
 
 const TypingEffect = ({ words, currentWordIndex, input }) => {
-  const visibleWords = words.slice(currentWordIndex, currentWordIndex + 10);
+  // Only show words that haven't been typed yet
+  const remainingWords = words.slice(currentWordIndex);
+  const visibleWords = remainingWords.slice(0, 10);
   const firstLine = visibleWords.slice(0, 5);
   const secondLine = visibleWords.slice(5, 10);
-  const typedWords = input.trim().split(/\s+/);
-  const currentInput = input.trim();
 
   const getWordClass = (word, index) => {
-    // If this word has been typed (completed with space)
-    if (index < typedWords.length) {
-      return typedWords[index] === word ? 'correct-word' : 'incorrect-word';
-    }
-
-    // If this is the current word being typed
+    // First word is always the current word
     if (index === 0) {
-      // Only show blue background if we're actually typing this word
-      return currentInput.length > 0 ? 'current-word' : 'default-word';
+      // If we're typing the current word
+      if (input.length > 0) {
+        // Check if what we've typed so far matches the beginning of the word
+        const typedSoFar = input.trim();
+        if (word.startsWith(typedSoFar)) {
+          return 'current-word';
+        } else {
+          return 'incorrect-word';
+        }
+      }
+      return 'current-word';
     }
-
-    // Default state for untyped words
+    // All other words are default
     return 'default-word';
   };
 
