@@ -5,20 +5,22 @@ const TypingEffect = ({ words, currentWordIndex, input }) => {
   const firstLine = visibleWords.slice(0, 5);
   const secondLine = visibleWords.slice(5, 10);
   const typedWords = input.trim().split(/\s+/);
+  const currentInput = input.trim();
 
   const getWordClass = (word, index) => {
-    // Current word being typed
-    if (index === 0) {
-      return 'word current';
-    }
-
-    // Words that have been typed
+    // If this word has been typed (completed with space)
     if (index < typedWords.length) {
-      return typedWords[index] === word ? 'word correct' : 'word incorrect';
+      return typedWords[index] === word ? 'correct-word' : 'incorrect-word';
     }
 
-    // Words that haven't been typed yet
-    return 'word';
+    // If this is the current word being typed
+    if (index === 0) {
+      // Only show blue background if we're actually typing this word
+      return currentInput.length > 0 ? 'current-word' : 'default-word';
+    }
+
+    // Default state for untyped words
+    return 'default-word';
   };
 
   return (
@@ -37,7 +39,7 @@ const TypingEffect = ({ words, currentWordIndex, input }) => {
         {secondLine.map((word, index) => (
           <span 
             key={`second-${index}`} 
-            className="word"
+            className="default-word"
           >
             {word}
           </span>

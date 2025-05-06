@@ -49,8 +49,13 @@ const TypingApp = () => {
     }
 
     // Check if the current word is completed
-    if (value.trim() === currentWord) {
-      setInput('');
+    if (value.endsWith(' ')) {
+      const typedWord = value.trim();
+      if (typedWord === currentWord) {
+        setInput('');
+      } else {
+        setInput(value);
+      }
     } else {
       setInput(value);
     }
