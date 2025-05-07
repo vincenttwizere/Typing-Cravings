@@ -73,8 +73,14 @@ const TypingApp = () => {
       wpm,
       accuracy,
       timeElapsed,
-      wordsTyped: words
+      wordsTyped: words,
+      timestamp: new Date().toISOString()
     };
+    
+    // Store results in localStorage
+    const existingHistory = JSON.parse(localStorage.getItem('typingHistory')) || [];
+    const updatedHistory = [...existingHistory, testResults];
+    localStorage.setItem('typingHistory', JSON.stringify(updatedHistory));
     
     setResults(testResults);
     completeTest(testResults);

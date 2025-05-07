@@ -33,8 +33,35 @@ const History = () => {
   useEffect(() => {
     // Get typing history from localStorage
     const history = JSON.parse(localStorage.getItem('typingHistory')) || [];
-    setTypingHistory(history);
+    
+    // If no history exists, add some sample data for testing
+    if (history.length === 0) {
+      const sampleData = generateSampleData();
+      localStorage.setItem('typingHistory', JSON.stringify(sampleData));
+      setTypingHistory(sampleData);
+    } else {
+      setTypingHistory(history);
+    }
   }, []);
+
+  // Function to generate sample data for testing
+  const generateSampleData = () => {
+    const data = [];
+    const now = new Date();
+    
+    for (let i = 0; i < 10; i++) {
+      const date = new Date(now - i * 24 * 60 * 60 * 1000); // One test per day
+      data.push({
+        wpm: Math.floor(Math.random() * 40) + 40, // Random WPM between 40-80
+        accuracy: Math.floor(Math.random() * 20) + 80, // Random accuracy between 80-100
+        timeElapsed: 60,
+        wordsTyped: Math.floor(Math.random() * 100) + 50, // Random words between 50-150
+        timestamp: date.toISOString()
+      });
+    }
+    
+    return data;
+  };
 
   const filterHistoryByTimeRange = (history) => {
     const now = new Date();
