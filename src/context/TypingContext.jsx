@@ -65,13 +65,13 @@ export const TypingProvider = ({ children }) => {
   const completeTest = (results) => {
     setTestResults(results);
     
-    // Create a new history entry
+    // Create a new history entry with the correct format
     const newHistoryEntry = {
-      id: Date.now(),
-      mode: currentMode,
-      level: currentLevel,
-      results,
-      date: new Date().toISOString()
+      wpm: results.wpm,
+      accuracy: results.accuracy,
+      timeElapsed: results.timeElapsed,
+      wordsTyped: results.wordsTyped,
+      timestamp: new Date().toISOString()
     };
     
     // Update both state and localStorage

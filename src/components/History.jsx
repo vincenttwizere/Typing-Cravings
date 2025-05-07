@@ -12,6 +12,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
+import { useTyping } from '../context/TypingContext';
 
 // Register ChartJS components
 ChartJS.register(
@@ -30,25 +31,26 @@ const History = () => {
   const [typingHistory, setTypingHistory] = useState([]);
   const [timeRange, setTimeRange] = useState('all');
   const [error, setError] = useState(null);
+  const { history } = useTyping();
 
   useEffect(() => {
     try {
       // Get typing history from localStorage
-      const history = JSON.parse(localStorage.getItem('typingHistory')) || [];
+      const savedHistory = JSON.parse(localStorage.getItem('typingHistory')) || [];
       
       // If no history exists, add some sample data for testing
-      if (history.length === 0) {
+      if (savedHistory.length === 0) {
         const sampleData = generateSampleData();
         localStorage.setItem('typingHistory', JSON.stringify(sampleData));
         setTypingHistory(sampleData);
       } else {
-        setTypingHistory(history);
+        setTypingHistory(savedHistory);
       }
     } catch (err) {
       setError('Failed to load typing history. Please try again.');
       console.error('Error loading history:', err);
     }
-  }, []);
+  }, [history]); // Add history as a dependency to update when it changes
 
   // Function to generate sample data for testing
   const generateSampleData = () => {
