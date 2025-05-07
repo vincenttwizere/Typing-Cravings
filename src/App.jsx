@@ -3,6 +3,7 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import Navbar from './components/Navbar';
 import TypingEffect from './components/TypingEffect';
+import History from './components/History';
 import { TypingProvider, useTyping } from './context/TypingContext';
 
 const TypingApp = () => {
@@ -136,12 +137,7 @@ const TypingApp = () => {
 
   const renderContent = () => {
     if (currentMode === 'history') {
-      return (
-        <div className="history-container">
-          <h2>Typing History</h2>
-          {/* Add history display logic here */}
-        </div>
-      );
+      return <History />;
     }
 
     if (!currentContent) {

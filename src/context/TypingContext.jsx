@@ -20,6 +20,12 @@ export const TypingProvider = ({ children }) => {
   const [isTestActive, setIsTestActive] = useState(false);
   const [testResults, setTestResults] = useState(null);
 
+  // Load history from localStorage on initial render
+  useEffect(() => {
+    const savedHistory = JSON.parse(localStorage.getItem('typingHistory')) || [];
+    setHistory(savedHistory);
+  }, []);
+
   const loadContent = (mode, level) => {
     setCurrentMode(mode);
     setCurrentLevel(level);
@@ -58,13 +64,21 @@ export const TypingProvider = ({ children }) => {
 
   const completeTest = (results) => {
     setTestResults(results);
-    setHistory(prev => [...prev, {
+    
+    // Create a new history entry
+    const newHistoryEntry = {
       id: Date.now(),
       mode: currentMode,
       level: currentLevel,
       results,
       date: new Date().toISOString()
-    }]);
+    };
+    
+    // Update both state and localStorage
+    const updatedHistory = [...history, newHistoryEntry];
+    setHistory(updatedHistory);
+    localStorage.setItem('typingHistory', JSON.stringify(updatedHistory));
+    
     setIsTestActive(false);
   };
 
