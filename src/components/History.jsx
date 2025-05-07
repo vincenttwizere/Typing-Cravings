@@ -28,19 +28,25 @@ ChartJS.register(
 
 const History = () => {
   const [typingHistory, setTypingHistory] = useState([]);
-  const [timeRange, setTimeRange] = useState('all'); // 'all', 'week', 'month'
+  const [timeRange, setTimeRange] = useState('all');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Get typing history from localStorage
-    const history = JSON.parse(localStorage.getItem('typingHistory')) || [];
-    
-    // If no history exists, add some sample data for testing
-    if (history.length === 0) {
-      const sampleData = generateSampleData();
-      localStorage.setItem('typingHistory', JSON.stringify(sampleData));
-      setTypingHistory(sampleData);
-    } else {
-      setTypingHistory(history);
+    try {
+      // Get typing history from localStorage
+      const history = JSON.parse(localStorage.getItem('typingHistory')) || [];
+      
+      // If no history exists, add some sample data for testing
+      if (history.length === 0) {
+        const sampleData = generateSampleData();
+        localStorage.setItem('typingHistory', JSON.stringify(sampleData));
+        setTypingHistory(sampleData);
+      } else {
+        setTypingHistory(history);
+      }
+    } catch (err) {
+      setError('Failed to load typing history. Please try again.');
+      console.error('Error loading history:', err);
     }
   }, []);
 
@@ -125,6 +131,7 @@ const History = () => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -152,6 +159,7 @@ const History = () => {
 
   const distributionOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
@@ -194,6 +202,17 @@ const History = () => {
 
   const stats = calculateStats();
 
+  if (error) {
+    return (
+      <div className="history-container">
+        <div className="error-message">
+          <h2>Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="history-container">
       <h2>Typing History</h2>
@@ -221,10 +240,10 @@ const History = () => {
       {filteredHistory.length > 0 ? (
         <div className="chart-container">
           <div className="chart-grid">
-            <div className="chart-card">
+            <div className="chart-card" style={{ height: '300px' }}>
               <Line data={progressChartData} options={chartOptions} />
             </div>
-            <div className="chart-card">
+            <div className="chart-card" style={{ height: '300px' }}>
               <Bar data={distributionChartData} options={distributionOptions} />
             </div>
           </div>
