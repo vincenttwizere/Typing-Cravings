@@ -108,13 +108,19 @@ const History = () => {
           .filter(test => !isNaN(new Date(test.timestamp).getTime()))
           .map(test => test.wpm),
         borderColor: '#6a11cb',
-        backgroundColor: 'rgba(106, 17, 203, 0.1)',
+        backgroundColor: 'rgba(106, 17, 203, 0.15)',
         tension: 0.4,
         fill: true,
         yAxisID: 'y',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        borderWidth: 2
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        borderWidth: 3,
+        pointBackgroundColor: '#6a11cb',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#6a11cb',
+        pointHoverBorderColor: '#fff',
+        pointHoverBorderWidth: 2
       },
       {
         label: 'Accuracy',
@@ -122,13 +128,19 @@ const History = () => {
           .filter(test => !isNaN(new Date(test.timestamp).getTime()))
           .map(test => test.accuracy),
         borderColor: '#2575fc',
-        backgroundColor: 'rgba(37, 117, 252, 0.1)',
+        backgroundColor: 'rgba(37, 117, 252, 0.15)',
         tension: 0.4,
         fill: true,
         yAxisID: 'y1',
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        borderWidth: 2
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        borderWidth: 3,
+        pointBackgroundColor: '#2575fc',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#2575fc',
+        pointHoverBorderColor: '#fff',
+        pointHoverBorderWidth: 2
       }
     ]
   };
@@ -165,17 +177,22 @@ const History = () => {
         position: 'top',
         labels: {
           usePointStyle: true,
-          padding: 20
+          padding: 20,
+          font: {
+            size: 12,
+            weight: 'bold'
+          }
         }
       },
       title: {
         display: true,
         text: 'Typing Progress',
         font: {
-          size: 18,
+          size: 20,
           weight: 'bold'
         },
-        padding: 20
+        padding: 25,
+        color: '#333'
       },
       tooltip: {
         callbacks: {
@@ -188,12 +205,15 @@ const History = () => {
             return context[0].label;
           }
         },
-        padding: 12,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        padding: 15,
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
         titleColor: '#333',
         bodyColor: '#666',
         borderColor: '#ddd',
-        borderWidth: 1
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: true,
+        boxPadding: 6
       }
     },
     scales: {
@@ -202,11 +222,17 @@ const History = () => {
           maxRotation: 45,
           minRotation: 45,
           font: {
-            size: 11
-          }
+            size: 11,
+            weight: '500'
+          },
+          padding: 10
         },
         grid: {
           display: false
+        },
+        border: {
+          display: true,
+          color: '#ddd'
         }
       },
       y: {
@@ -217,19 +243,28 @@ const History = () => {
           display: true,
           text: 'WPM',
           font: {
-            size: 12,
+            size: 13,
             weight: 'bold'
-          }
+          },
+          padding: { top: 10, bottom: 10 }
         },
         min: 0,
-        max: Math.max(...filteredHistory.map(test => test.wpm)) * 1.2,
+        max: Math.max(100, Math.max(...filteredHistory.map(test => test.wpm)) * 1.2),
         grid: {
-          color: 'rgba(0, 0, 0, 0.05)'
+          color: 'rgba(0, 0, 0, 0.05)',
+          drawBorder: false
         },
         ticks: {
           font: {
-            size: 11
-          }
+            size: 11,
+            weight: '500'
+          },
+          stepSize: 20,
+          padding: 8
+        },
+        border: {
+          display: true,
+          color: '#ddd'
         }
       },
       y1: {
@@ -240,9 +275,10 @@ const History = () => {
           display: true,
           text: 'Accuracy (%)',
           font: {
-            size: 12,
+            size: 13,
             weight: 'bold'
-          }
+          },
+          padding: { top: 10, bottom: 10 }
         },
         min: 0,
         max: 100,
@@ -251,8 +287,14 @@ const History = () => {
         },
         ticks: {
           font: {
-            size: 11
-          }
+            size: 11,
+            weight: '500'
+          },
+          padding: 8
+        },
+        border: {
+          display: true,
+          color: '#ddd'
         }
       }
     }
