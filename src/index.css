@@ -207,8 +207,8 @@ button:focus-visible {
 
 .history-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.5rem;
   margin-bottom: 2rem;
   width: 100%;
   max-width: 1000px;
@@ -216,21 +216,23 @@ button:focus-visible {
 
 .stat-card {
   background: white;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.35rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .stat-card h3 {
   color: #666;
-  font-size: 0.9rem;
-  margin: 0 0 0.5rem 0;
+  font-size: 0.65rem;
+  margin: 0 0 0.15rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .stat-card p {
   color: #333;
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
 }
@@ -275,9 +277,21 @@ button:focus-visible {
     padding: 0.5rem;
   }
   
+  .stat-card {
+    padding: 0.25rem;
+  }
+  
+  .stat-card h3 {
+    font-size: 0.6rem;
+  }
+  
+  .stat-card p {
+    font-size: 0.8rem;
+  }
+  
   .history-stats {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.35rem;
   }
   
   .chart-container {
