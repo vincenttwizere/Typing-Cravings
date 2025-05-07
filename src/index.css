@@ -39,6 +39,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -107,6 +108,7 @@ button:focus-visible {
   height: calc(100vh - 2rem);
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .dashboard-grid {
@@ -114,6 +116,14 @@ button:focus-visible {
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
+}
+
+.history-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .dashboard-card {
@@ -197,11 +207,10 @@ button:focus-visible {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem auto;
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 .stat-card {
@@ -229,13 +238,15 @@ button:focus-visible {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
 }
 
 .chart-grid {
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .chart-card {
@@ -245,6 +256,7 @@ button:focus-visible {
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 300px;
 }
 
 @media (max-width: 1200px) {
@@ -258,10 +270,18 @@ button:focus-visible {
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    padding: 0.5rem;
+  }
+  
+  .history-container {
+    padding: 0.5rem;
+  }
+  
   .history-stats {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.75rem;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
   }
   
   .stat-card {
@@ -277,6 +297,11 @@ button:focus-visible {
   }
   
   .chart-container {
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .chart-card {
+    min-height: 250px;
+    min-width: 250px;
   }
 }
