@@ -13,7 +13,6 @@ export const useTyping = () => useContext(TypingContext);
 
 export const TypingProvider = ({ children }) => {
   const [currentMode, setCurrentMode] = useState('practice');
-  const [currentLevel, setCurrentLevel] = useState('beginner');
   const [currentContent, setCurrentContent] = useState(beginnerLessons[0]);
   const [currentLesson, setCurrentLesson] = useState(0);
   const [history, setHistory] = useState([]);
@@ -26,9 +25,8 @@ export const TypingProvider = ({ children }) => {
     setHistory(savedHistory);
   }, []);
 
-  const loadContent = (mode, level) => {
+  const loadContent = (mode) => {
     setCurrentMode(mode);
-    setCurrentLevel(level);
     
     switch (mode) {
       case 'practice':
@@ -65,7 +63,6 @@ export const TypingProvider = ({ children }) => {
   const completeTest = (results) => {
     setTestResults(results);
     
-    // Create a new history entry with the correct format
     const newHistoryEntry = {
       wpm: results.wpm,
       accuracy: results.accuracy,
@@ -74,7 +71,6 @@ export const TypingProvider = ({ children }) => {
       timestamp: new Date().toISOString()
     };
     
-    // Update both state and localStorage
     const updatedHistory = [...history, newHistoryEntry];
     setHistory(updatedHistory);
     localStorage.setItem('typingHistory', JSON.stringify(updatedHistory));
@@ -96,14 +92,8 @@ export const TypingProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    // Load initial content
-    loadContent('practice', 'beginner');
-  }, []);
-
   const value = {
     currentMode,
-    currentLevel,
     currentContent,
     currentLesson,
     history,
