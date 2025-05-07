@@ -107,7 +107,6 @@ button:focus-visible {
   height: calc(100vh - 2rem);
   display: flex;
   align-items: center;
-  background-color: var(--bg-primary);
 }
 
 .dashboard-grid {
@@ -126,7 +125,6 @@ button:focus-visible {
   transition: all 0.2s ease;
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  background-color: var(--bg-secondary);
   margin-bottom: 0.5rem;
 }
 
@@ -136,27 +134,22 @@ button:focus-visible {
 
 .dashboard-card:hover {
   transform: translateX(4px);
-  background-color: var(--primary-color);
 }
 
 .dashboard-card:hover .dashboard-card-icon,
 .dashboard-card:hover .dashboard-card-title {
-  color: var(--text-primary);
-}
-
-.dashboard-card.active {
-  background-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .dashboard-card.active .dashboard-card-icon,
 .dashboard-card.active .dashboard-card-title {
-  color: var(--text-primary);
+  color: var(--primary-color);
 }
 
 .dashboard-card-icon {
   width: 24px;
   height: 24px;
-  color: var(--primary-color);
+  color: var(--text-primary);
   display: block;
   transition: all 0.2s ease;
   flex-shrink: 0;
