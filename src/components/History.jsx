@@ -90,23 +90,45 @@ const History = () => {
   const filteredHistory = filterHistoryByTimeRange(typingHistory);
 
   const progressChartData = {
-    labels: filteredHistory.map((_, index) => `Test ${index + 1}`),
+    labels: filteredHistory
+      .filter(test => !isNaN(new Date(test.timestamp).getTime()))
+      .map(test => {
+        const date = new Date(test.timestamp);
+        return date.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }),
     datasets: [
       {
         label: 'WPM',
-        data: filteredHistory.map(test => test.wpm),
+        data: filteredHistory
+          .filter(test => !isNaN(new Date(test.timestamp).getTime()))
+          .map(test => test.wpm),
         borderColor: '#6a11cb',
         backgroundColor: 'rgba(106, 17, 203, 0.1)',
         tension: 0.4,
-        fill: true
+        fill: true,
+        yAxisID: 'y',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
       },
       {
         label: 'Accuracy',
-        data: filteredHistory.map(test => test.accuracy),
+        data: filteredHistory
+          .filter(test => !isNaN(new Date(test.timestamp).getTime()))
+          .map(test => test.accuracy),
         borderColor: '#2575fc',
         backgroundColor: 'rgba(37, 117, 252, 0.1)',
         tension: 0.4,
-        fill: true
+        fill: true,
+        yAxisID: 'y1',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
       }
     ]
   };
@@ -134,26 +156,103 @@ const History = () => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          usePointStyle: true,
+          padding: 20
+        }
       },
       title: {
         display: true,
         text: 'Typing Progress',
         font: {
-          size: 16,
+          size: 18,
           weight: 'bold'
-        }
+        },
+        padding: 20
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const label = context.dataset.label || '';
+            const value = context.parsed.y;
+            return `${label}: ${value}${label === 'Accuracy' ? '%' : ''}`;
+          },
+          title: function(context) {
+            return context[0].label;
+          }
+        },
+        padding: 12,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#333',
+        bodyColor: '#666',
+        borderColor: '#ddd',
+        borderWidth: 1
       }
     },
     scales: {
+      x: {
+        ticks: {
+          maxRotation: 45,
+          minRotation: 45,
+          font: {
+            size: 11
+          }
+        },
+        grid: {
+          display: false
+        }
+      },
       y: {
-        beginAtZero: true,
-        max: 100,
+        type: 'linear',
+        display: true,
+        position: 'left',
         title: {
           display: true,
-          text: 'Score'
+          text: 'WPM',
+          font: {
+            size: 12,
+            weight: 'bold'
+          }
+        },
+        min: 0,
+        max: Math.max(...filteredHistory.map(test => test.wpm)) * 1.2,
+        grid: {
+          color: 'rgba(0, 0, 0, 0.05)'
+        },
+        ticks: {
+          font: {
+            size: 11
+          }
+        }
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+        title: {
+          display: true,
+          text: 'Accuracy (%)',
+          font: {
+            size: 12,
+            weight: 'bold'
+          }
+        },
+        min: 0,
+        max: 100,
+        grid: {
+          drawOnChartArea: false
+        },
+        ticks: {
+          font: {
+            size: 11
+          }
         }
       }
     }
