@@ -249,7 +249,7 @@ const History = () => {
           padding: { top: 10, bottom: 10 }
         },
         min: 0,
-        max: Math.max(100, Math.max(...filteredHistory.map(test => test.wpm)) * 1.2),
+        max: Math.max(150, Math.max(...filteredHistory.map(test => test.wpm)) * 1.2),
         grid: {
           color: 'rgba(0, 0, 0, 0.05)',
           drawBorder: false
@@ -259,7 +259,7 @@ const History = () => {
             size: 11,
             weight: '500'
           },
-          stepSize: 20,
+          stepSize: 25,
           padding: 8
         },
         border: {
@@ -290,6 +290,7 @@ const History = () => {
             size: 11,
             weight: '500'
           },
+          stepSize: 10,
           padding: 8
         },
         border: {
@@ -383,7 +384,7 @@ const History = () => {
       {filteredHistory.length > 0 ? (
         <div className="chart-container">
           <div className="chart-grid">
-            <div className="chart-card" style={{ height: '300px' }}>
+            <div className="chart-card" style={{ height: '400px' }}>
               <Line data={progressChartData} options={chartOptions} />
             </div>
             <div className="chart-card" style={{ height: '300px' }}>
